@@ -1,54 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#7b1e3a">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Udvitha Collections</title>
 <style>
-:root{--primary:#7b1e3a;--primary2:#a52b50;--gold:#c99a2e;--bg:#fff8f5;--text:#2b2024;--muted:#74686d;--card:#fff;--line:#eadde1}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:linear-gradient(135deg,#6d1733,#a52b50);color:#fff;padding:25px 16px 20px;text-align:center;position:sticky;top:0;z-index:10;box-shadow:0 3px 14px #0002}
-.brand{font-family:Georgia,serif;font-size:30px;font-weight:700;letter-spacing:.4px}.tag{margin-top:5px;font-size:13px;opacity:.92}
-.tabs{display:flex;gap:8px;max-width:760px;margin:16px auto 0}.tab{flex:1;border:1px solid #ffffff55;background:#ffffff18;color:#fff;border-radius:12px;padding:11px 8px;font-weight:700;font-size:14px;cursor:pointer}.tab.active{background:#fff;color:var(--primary)}
-.wrap{max-width:1000px;margin:auto;padding:16px}.tools{display:flex;gap:9px;margin-bottom:15px}.search{flex:1;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:15px;outline:none;background:#fff}.count{padding:13px 10px;color:var(--muted);font-size:13px;white-space:nowrap}
-.section-title{font-family:Georgia,serif;font-size:23px;margin:10px 0 4px}.hint{font-size:13px;color:var(--muted);margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 3px 12px #6d173310}.pic{aspect-ratio:1/1.08;background:#f3ecee;position:relative;overflow:hidden}.pic img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}.badge{position:absolute;left:8px;top:8px;background:#fff;color:var(--primary);border-radius:20px;padding:5px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 7px #0002}.info{padding:11px}.code{font-size:12px;font-weight:800;color:var(--primary);letter-spacing:.6px}.name{font-weight:700;margin:3px 0 9px;line-height:1.25}.actions{display:flex;gap:7px}.btn{flex:1;border:0;border-radius:9px;padding:9px 6px;font-weight:700;font-size:12px;cursor:pointer;text-decoration:none;text-align:center}.view{background:#f3e6ea;color:var(--primary)}.wa{background:#25d366;color:#fff}
-.empty{padding:35px 10px;text-align:center;color:var(--muted);display:none}.footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 10px}.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:15px;z-index:30}.modal.open{display:flex}.modalbox{background:#fff;border-radius:16px;max-width:720px;width:100%;max-height:92vh;overflow:auto}.modalbox img{width:100%;max-height:70vh;object-fit:contain;background:#f7f1f2}.modalinfo{padding:14px}.close{float:right;border:0;background:#eee;border-radius:50%;width:34px;height:34px;font-size:20px;cursor:pointer}.small{font-size:12px;color:var(--muted)}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.brand{font-size:34px}.wrap{padding:22px}.pic{aspect-ratio:1/1.15}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#faf7f3;color:#2d241f}
+header{background:linear-gradient(135deg,#7b1e3a,#a83b5a);color:white;text-align:center;padding:25px 15px}
+h1{margin:0;font-size:30px}.tag{margin:7px 0 0;opacity:.9}
+.controls{max-width:1000px;margin:18px auto;padding:0 14px}
+.tabs{display:flex;gap:10px;margin-bottom:12px}.tab{flex:1;border:0;border-radius:12px;padding:13px;font-size:16px;font-weight:bold;background:#eadfe2;color:#6b243d;cursor:pointer}.tab.active{background:#7b1e3a;color:#fff}
+input{width:100%;padding:13px 15px;border:1px solid #ddd;border-radius:12px;font-size:16px;background:#fff}
+.grid{max-width:1000px;margin:auto;padding:0 14px 30px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 12px #00000012}.photo{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;background:#eee;cursor:pointer}
+.info{padding:12px}.code{font-weight:800;color:#7b1e3a}.name{margin:4px 0 10px;font-size:16px}
+.wa{display:block;text-align:center;text-decoration:none;background:#188b45;color:#fff;border-radius:10px;padding:10px;font-weight:bold}
+.empty{text-align:center;grid-column:1/-1;padding:40px;color:#777}
+footer{text-align:center;padding:20px;color:#777;font-size:13px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">Udvitha Collections</div>
-  <div class="tag">Elegant Sarees & Jewellery • Easy Ordering on WhatsApp</div>
+<header><h1>Udvitha Collections</h1><div class="tag">Elegant Sarees • Beautiful Jewellery • Easy Ordering on WhatsApp</div></header>
+<div class="controls">
   <div class="tabs">
     <button class="tab active" data-cat="sarees">👗 Sarees</button>
     <button class="tab" data-cat="jewellery">💎 Jewellery</button>
   </div>
-</header>
-<main class="wrap">
-  <div class="tools"><input id="search" class="search" placeholder="Search code or collection…"><div id="count" class="count"></div></div>
-  <h1 id="title" class="section-title">Saree Collection</h1>
-  <div id="hint" class="hint">Tap a photo to view it larger • Use WhatsApp to enquire</div>
-  <div id="grid" class="grid"></div><div id="empty" class="empty">No items found. Try another code.</div>
-  <div class="footer">Udvitha Collections • WhatsApp: +91 95027 47565</div>
-</main>
-<div id="modal" class="modal"><div class="modalbox"><button class="close" onclick="closeModal()">×</button><img id="modalImg"><div class="modalinfo"><div id="modalCode" class="code"></div><h2 id="modalName" style="margin:4px 0 10px;font-size:20px"></h2><a id="modalWa" class="btn wa" target="_blank" rel="noopener">💬 Enquire on WhatsApp</a></div></div></div>
-<script src="products.js"></script>
+  <input id="search" type="search" placeholder="Search by code or name…">
+</div>
+<main id="grid" class="grid"></main>
+<footer>© Udvitha Collections • Enquiries on WhatsApp</footer>
 <script>
-const WA='919502747565'; let category='sarees';
-const grid=document.getElementById('grid'),search=document.getElementById('search'),count=document.getElementById('count'),empty=document.getElementById('empty');
-function waLink(p){return 'https://wa.me/'+WA+'?text='+encodeURIComponent('Hi Udvitha Collections, I am interested in '+p.code+' - '+p.name);}
+const WA="919502747565";
+const products=[
+ {cat:"sarees",code:"S001",name:"Green & Yellow Saree",img:"S001.jpg"},
+ {cat:"sarees",code:"S002",name:"Red & White Saree",img:"S002.jpg"},
+ {cat:"sarees",code:"S003",name:"Yellow & Pink Saree",img:"S003.jpg"},
+ {cat:"sarees",code:"S004",name:"Royal Blue Saree",img:"S004.jpg"},
+ {cat:"jewellery",code:"J001",name:"Sample Necklace",img:"J001.svg"},
+ {cat:"jewellery",code:"J002",name:"Sample Bangles",img:"J002.svg"},
+ {cat:"jewellery",code:"J003",name:"Sample Earrings",img:"J003.svg"}
+];
+let category="sarees";
 function render(){
- const q=search.value.trim().toLowerCase();
- const list=PRODUCTS.filter(p=>p.category===category && (!q || (p.code+' '+p.name).toLowerCase().includes(q)));
- count.textContent=list.length+' item'+(list.length===1?'':'s'); grid.innerHTML=''; empty.style.display=list.length?'none':'block';
- list.forEach(p=>{const card=document.createElement('article');card.className='card';card.innerHTML=`<div class="pic"><span class="badge">${p.code}</span><img src="${p.image}" alt="${p.name}" loading="lazy" onclick='openModal(${JSON.stringify(p)})'></div><div class="info"><div class="code">${p.code}</div><div class="name">${p.name}</div><div class="actions"><button class="btn view" onclick='openModal(${JSON.stringify(p)})'>View</button><a class="btn wa" href="${waLink(p)}" target="_blank" rel="noopener">WhatsApp</a></div></div>`;grid.appendChild(card);});
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const list=products.filter(p=>p.cat===category && (!q || (p.code+" "+p.name).toLowerCase().includes(q)));
+ const grid=document.getElementById("grid");
+ grid.innerHTML=list.length?list.map(p=>{
+   const msg=encodeURIComponent("Hi Udvitha Collections, I am interested in "+p.code+" - "+p.name);
+   return `<article class="card"><img class="photo" src="${p.img}" alt="${p.code} ${p.name}" onclick="window.open(this.src,'_blank')"><div class="info"><div class="code">${p.code}</div><div class="name">${p.name}</div><a class="wa" target="_blank" href="https://wa.me/${WA}?text=${msg}">💬 WhatsApp Enquiry</a></div></article>`
+ }).join(""):`<div class="empty">No items found.</div>`;
 }
-function openModal(p){document.getElementById('modalImg').src=p.image;document.getElementById('modalCode').textContent=p.code;document.getElementById('modalName').textContent=p.name;document.getElementById('modalWa').href=waLink(p);document.getElementById('modal').classList.add('open')}
-function closeModal(){document.getElementById('modal').classList.remove('open')}
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');category=b.dataset.cat;search.value='';document.getElementById('title').textContent=category==='sarees'?'Saree Collection':'Jewellery Collection';document.getElementById('hint').textContent=category==='sarees'?'Tap a photo to view it larger • Use WhatsApp to enquire':'Sample jewellery is shown below • Replace these with your own jewellery photos anytime';render()});
-search.addEventListener('input',render);document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});render();
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{category=b.dataset.cat;document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById("search").value="";render()});
+document.getElementById("search").oninput=render; render();
 </script>
 </body></html>
