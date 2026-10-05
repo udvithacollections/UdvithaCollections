@@ -5,23 +5,33 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Udvitha Collections</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#faf7f3;color:#2d241f}
-header{background:linear-gradient(135deg,#7b1e3a,#a83b5a);color:white;text-align:center;padding:25px 15px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#faf7f3;color:#2d241f}
+header{background:linear-gradient(135deg,#7b1e3a,#a83b5a);color:#fff;text-align:center;padding:25px 15px}
 h1{margin:0;font-size:30px}.tag{margin:7px 0 0;opacity:.9}
 .controls{max-width:1000px;margin:18px auto;padding:0 14px}
-.tabs{display:flex;gap:10px;margin-bottom:12px}.tab{flex:1;border:0;border-radius:12px;padding:13px;font-size:16px;font-weight:bold;background:#eadfe2;color:#6b243d;cursor:pointer}.tab.active{background:#7b1e3a;color:#fff}
+.tabs{display:flex;gap:10px;margin-bottom:12px}
+.tab{flex:1;border:0;border-radius:12px;padding:13px;font-size:16px;font-weight:bold;background:#eadfe2;color:#6b243d;cursor:pointer}
+.tab.active{background:#7b1e3a;color:#fff}
 input{width:100%;padding:13px 15px;border:1px solid #ddd;border-radius:12px;font-size:16px;background:#fff}
 .grid{max-width:1000px;margin:auto;padding:0 14px 30px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 12px #00000012}.photo{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;background:#eee;cursor:pointer}
-.info{padding:12px}.code{font-weight:800;color:#7b1e3a}.name{margin:4px 0 10px;font-size:16px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 12px #00000012}
+.photo{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;background:#eee;cursor:pointer}
+.info{padding:12px}.code{font-weight:800;color:#7b1e3a}
+.name{margin:4px 0 6px;font-size:16px}.price{font-size:18px;font-weight:800;margin:0 0 10px}
 .wa{display:block;text-align:center;text-decoration:none;background:#188b45;color:#fff;border-radius:10px;padding:10px;font-weight:bold}
 .empty{text-align:center;grid-column:1/-1;padding:40px;color:#777}
+.status{text-align:center;color:#777;font-size:13px;margin:8px 0 16px}
 footer{text-align:center;padding:20px;color:#777;font-size:13px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
-<header><h1>Udvitha Collections</h1><div class="tag">Elegant Sarees • Beautiful Jewellery • Easy Ordering on WhatsApp</div></header>
+<header>
+  <h1>Udvitha Collections</h1>
+  <div class="tag">Elegant Sarees • Beautiful Jewellery • Easy Ordering on WhatsApp</div>
+</header>
+
 <div class="controls">
   <div class="tabs">
     <button class="tab active" data-cat="sarees">👗 Sarees</button>
@@ -29,30 +39,87 @@ footer{text-align:center;padding:20px;color:#777;font-size:13px}
   </div>
   <input id="search" type="search" placeholder="Search by code or name…">
 </div>
+
+<div id="status" class="status">Loading collection…</div>
 <main id="grid" class="grid"></main>
 <footer>© Udvitha Collections • Enquiries on WhatsApp</footer>
+
 <script>
 const WA="919502747565";
-const products=[
- {cat:"sarees",code:"S001",name:"Green & Yellow Saree",img:"S001.jpg"},
- {cat:"sarees",code:"S002",name:"Red & White Saree",img:"S002.jpg"},
- {cat:"sarees",code:"S003",name:"Yellow & Pink Saree",img:"S003.jpg"},
- {cat:"sarees",code:"S004",name:"Royal Blue Saree",img:"S004.jpg"},
- {cat:"jewellery",code:"J001",name:"Sample Necklace",img:"J001.svg"},
- {cat:"jewellery",code:"J002",name:"Sample Bangles",img:"J002.svg"},
- {cat:"jewellery",code:"J003",name:"Sample Earrings",img:"J003.svg"}
-];
+const OWNER="udvithacollections";
+const REPO="UdvithaCollections";
+const BRANCH="main";
+
+let products=[];
 let category="sarees";
-function render(){
- const q=document.getElementById("search").value.trim().toLowerCase();
- const list=products.filter(p=>p.cat===category && (!q || (p.code+" "+p.name).toLowerCase().includes(q)));
- const grid=document.getElementById("grid");
- grid.innerHTML=list.length?list.map(p=>{
-   const msg=encodeURIComponent("Hi Udvitha Collections, I am interested in "+p.code+" - "+p.name);
-   return `<article class="card"><img class="photo" src="${p.img}" alt="${p.code} ${p.name}" onclick="window.open(this.src,'_blank')"><div class="info"><div class="code">${p.code}</div><div class="name">${p.name}</div><a class="wa" target="_blank" href="https://wa.me/${WA}?text=${msg}">💬 WhatsApp Enquiry</a></div></article>`
- }).join(""):`<div class="empty">No items found.</div>`;
+
+function parseFile(name){
+  // Supported: S005_1499.jpg, J004_699.png, etc.
+  const m=name.match(/^([SJ]\d+)_([0-9]+(?:\.[0-9]+)?)\.(jpg|jpeg|png|webp|gif|svg)$/i);
+  if(!m) return null;
+  const code=m[1].toUpperCase();
+  const price=Number(m[2]);
+  const cat=code.startsWith("S")?"sarees":"jewellery";
+  return {cat,code,price,img:name,name:(cat==="sarees"?"Saree ":"Jewellery ")+code};
 }
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{category=b.dataset.cat;document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById("search").value="";render()});
-document.getElementById("search").oninput=render; render();
+
+async function loadProducts(){
+  const status=document.getElementById("status");
+  try{
+    const url=`https://api.github.com/repos/${OWNER}/${REPO}/contents/?ref=${BRANCH}`;
+    const res=await fetch(url,{headers:{"Accept":"application/vnd.github+json"}});
+    if(!res.ok) throw new Error("GitHub file list unavailable");
+    const files=await res.json();
+
+    products=files
+      .filter(f=>f.type==="file")
+      .map(f=>parseFile(f.name))
+      .filter(Boolean);
+
+    // Keep one product per code. If duplicates exist, show the newest-looking
+    // filename only as a safety fallback; normally delete the old file first.
+    const byCode={};
+    for(const p of products){
+      if(!byCode[p.code] || p.img.localeCompare(byCode[p.code].img)>0) byCode[p.code]=p;
+    }
+    products=Object.values(byCode).sort((a,b)=>a.code.localeCompare(b.code,undefined,{numeric:true}));
+
+    status.textContent=products.length ? `${products.length} products loaded` : "No products found. Use filenames like S005_1499.jpg";
+    render();
+  }catch(e){
+    status.textContent="Could not load products. Please refresh.";
+    document.getElementById("grid").innerHTML='<div class="empty">Unable to load the collection right now.</div>';
+  }
+}
+
+function render(){
+  const q=document.getElementById("search").value.trim().toLowerCase();
+  const list=products.filter(p=>p.cat===category && (!q || (p.code+" "+p.name).toLowerCase().includes(q)));
+  const grid=document.getElementById("grid");
+  grid.innerHTML=list.length ? list.map(p=>{
+    const price=p.price.toLocaleString("en-IN");
+    const msg=encodeURIComponent(`Hi Udvitha Collections, I am interested in ${p.code} - ₹${price}`);
+    return `<article class="card">
+      <img class="photo" src="${p.img}" alt="${p.code}" onclick="window.open(this.src,'_blank')">
+      <div class="info">
+        <div class="code">${p.code}</div>
+        <div class="name">${p.name}</div>
+        <div class="price">₹${price}</div>
+        <a class="wa" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${msg}">💬 WhatsApp Enquiry</a>
+      </div>
+    </article>`;
+  }).join("") : '<div class="empty">No items found.</div>';
+}
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  category=b.dataset.cat;
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  document.getElementById("search").value="";
+  render();
+});
+document.getElementById("search").oninput=render;
+loadProducts();
 </script>
-</body></html>
+</body>
+</html>
